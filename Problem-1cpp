@@ -1,0 +1,55 @@
+/*
+TC : O(N)
+SC : O(H)
+*/
+/**
+ * Definition for a binary tree node.
+ * struct TreeNode {
+ *     int val;
+ *     TreeNode *left;
+ *     TreeNode *right;
+ *     TreeNode() : val(0), left(nullptr), right(nullptr) {}
+ *     TreeNode(int x) : val(x), left(nullptr), right(nullptr) {}
+ *     TreeNode(int x, TreeNode *left, TreeNode *right) : val(x), left(left), right(right) {}
+ * };
+ */
+class Solution
+{
+public:
+    vector<int> result;
+    vector<int> rightSideView(TreeNode *root)
+    {
+        if (root == nullptr)
+        {
+            return {};
+        }
+
+        dfs(root, 0);
+        return result;
+    }
+
+private:
+    void dfs(TreeNode *root, int level)
+    {
+        // base case
+        if (root == nullptr)
+        {
+            return;
+        }
+
+        // add first element at each level
+        if (level == result.size())
+        {
+            result.push_back(root->val);
+        }
+        else
+        {
+            // update the value at the respective level to store the right most element
+            result[level] = root->val;
+        }
+
+        // recurse on left and right child
+        dfs(root->left, level + 1);
+        dfs(root->right, level + 1);
+    }
+};
